@@ -1,0 +1,3 @@
+[submodule "poston-api"]
+	path = poston-api
+	url = git@github.com:RendyDharmaPutra/poston-api.git
