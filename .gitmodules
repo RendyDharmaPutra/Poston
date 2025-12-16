@@ -1,3 +1,6 @@
 [submodule "poston-api"]
 	path = poston-api
 	url = git@github.com:RendyDharmaPutra/poston-api.git
+[submodule "poston-bot"]
+	path = poston-bot
+	url = git@github.com:RendyDharmaPutra/poston-bot.git
