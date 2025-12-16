@@ -1,4 +1,20 @@
 services:
+  poston-bot:
+    container_name: poston-bot
+    build:
+      context: ./poston-bot
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./poston-bot:/app
+      - /app/node_modules
+    environment:
+      - BOT_SECRET=${BOT_SECRET}
+      - BOT_TOKEN=${BOT_TOKEN}
+      - API_BASE_URL=${API_BASE_URL}
+    depends_on:
+      - poston-api
+    restart: unless-stopped
+
   poston-api:
     user: "${UID}:${GID}"
     container_name: poston-api

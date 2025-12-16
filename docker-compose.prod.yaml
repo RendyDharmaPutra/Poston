@@ -1,0 +1,50 @@
+services:
+  poston-bot:
+    container_name: poston-bot
+    build:
+      context: ./poston-bot
+      dockerfile: Dockerfile.prod
+    environment:
+      - BOT_SECRET=${BOT_SECRET}
+      - BOT_TOKEN=${BOT_TOKEN}
+      - API_BASE_URL=${API_BASE_URL}
+    depends_on:
+      - poston-api
+    restart: unless-stopped
+
+  poston-api:
+    user: "${UID}:${GID}"
+    container_name: poston-api
+    build:
+      context: ./poston-api
+      dockerfile: Dockerfile.prod
+    ports:
+      - "${API_PORT}:3000"
+    environment:
+      - BOT_SECRET=${BOT_SECRET}
+      - JWT_SECRET=${JWT_SECRET}
+      - HOST=${API_HOST}
+      - PORT=3000
+      - DB_HOST=${POSTGRES_HOST}
+      - DB_PORT=${POSTGRES_PORT}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+    depends_on:
+      - poston-postgres
+    restart: unless-stopped
+
+  poston-postgres:
+    image: postgres:alpine
+    container_name: poston-postgres
+    ports:
+      - "${POSTGRES_HOST_PORT}:${POSTGRES_PORT}"
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./poston-postgres:/var/lib/postgresql/data
+    restart: unless-stopped
