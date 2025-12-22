@@ -18,6 +18,7 @@ services:
     build:
       context: ./poston-api
       dockerfile: Dockerfile.prod
+      target: runner
     expose:
       - "3000"
     environment:
@@ -40,7 +41,7 @@ services:
     build:
       context: ./poston-api
       dockerfile: Dockerfile.prod
-    command: bunx drizzle-kit migrate
+      target: migrator
     environment:
       - DB_URL=${POSTGRES_URL}
     depends_on:
