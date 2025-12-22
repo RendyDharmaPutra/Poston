@@ -18,8 +18,8 @@ services:
     build:
       context: ./poston-api
       dockerfile: Dockerfile.prod
-    ports:
-      - "${API_PORT}:3000"
+    expose:
+      - "3000"
     environment:
       - BOT_SECRET=${BOT_SECRET}
       - JWT_SECRET=${JWT_SECRET}

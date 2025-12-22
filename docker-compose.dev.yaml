@@ -21,8 +21,8 @@ services:
     build:
       context: ./poston-api
       dockerfile: Dockerfile.dev
-    ports:
-      - "${API_PORT}:3000"
+    expose:
+      - "3000"
     volumes:
       - ./poston-api:/app
       - /app/node_modules
